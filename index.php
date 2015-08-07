@@ -79,10 +79,20 @@
                 t += ft;
                 // 计算当前位移
                 h = (v0 * (t/1000)) - ((g*(t/1000)*(t/1000))/2);
+                
+                
+                hy = f_h(v0,g);// 顶点y
+                
+                hx = f_t(v0, g, v/scale);// 顶点x
+                k = f_k((t/1000)*v/scale, h, hx, hy);
+                
+                console.log(' ' + ((t/1000)*v/scale) + ' ' + h + ' ' + hx + ' ' + hy + ' ' + k + ' ' +(Math.atan(k)/3.14*180));
+                
+                
                 // 计算当前位置
                 cx = x;
                 cy = y-(h/scale); // 偏移像素
-                draw_photo(cx, cy);
+                draw_photo(cx, cy, Math.atan(k));
                 if (wall.length > 0) {
                     // clear wall
                     var shift = false;
@@ -147,9 +157,21 @@
 
     };
     imageObj.src = '<?php echo $_GET['user'];?>.png';
+    
+    function f_h(v0,g) {
+      return (v0*v0) / (2*g);
+    }
+    
+    function f_t(v0, g, s) {
+    	return v0/g * s;
+    }
+    
+    function f_k(x,y,x1,y1) {
+      return (y1-y) * 2/(x1-x);
+    }
 
-    function draw_photo(x,y) {
-        context.drawImage(imageObj, x, y, 40, 40);
+    function draw_photo(x,y,rotate) {
+        context.drawImage(imageObj, 0, 0, 40, 40);
     }
     
     function draw_score() {
