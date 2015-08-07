@@ -82,17 +82,14 @@
                 
                 
                 hy = f_h(v0,g);// ¶¥µãy
-                
                 hx = f_t(v0, g, v/scale);// ¶¥µãx
-                k = f_k((t/1000)*v/scale, h, hx, hy);
-                
-                console.log(' ' + ((t/1000)*v/scale) + ' ' + h + ' ' + hx + ' ' + hy + ' ' + k + ' ' +(Math.atan(k)/3.14*180));
-                
+                k = f_k((t/1000)*v/scale, h, hx, hy);// Ð±ÂÊ
+                r = Math.atan(k); // »¡¶È
                 
                 // ¼ÆËãµ±Ç°Î»ÖÃ
                 cx = x;
                 cy = y-(h/scale); // Æ«ÒÆÏñËØ
-                draw_photo(cx, cy, Math.atan(k));
+
                 if (wall.length > 0) {
                     // clear wall
                     var shift = false;
@@ -111,7 +108,7 @@
                     if (shift)
                         wall.shift();
                 }
-
+                draw_photo(cx, cy, r);
                 // Åö×²¼ì²â
                 if ((cy+40) > ch) {
                     game_over();
@@ -123,6 +120,7 @@
                         }
                     }
                 }
+
                 new_wall();
                 distance += v/scale;
                 last_wall += v/scale;
@@ -171,7 +169,12 @@
     }
 
     function draw_photo(x,y,rotate) {
-        context.drawImage(imageObj, 0, 0, 40, 40);
+        context.save();
+        context.translate(x+20,y+20);
+        context.rotate(-rotate);
+        context.translate(-(x+20),-(y+20));
+        context.drawImage(imageObj, x, y, 40, 40);
+        context.restore();
     }
     
     function draw_score() {

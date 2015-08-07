@@ -25,14 +25,20 @@
 
     imageObj.onload = function() {
 	
-	context.drawImage(imageObj, 100, 100, 40, 40);
+	context.drawImage(imageObj, 100-20, 100-20, 40, 40);
 	context.save();
 	context.translate(100,100);
-	context.rotate(Math.PI/180*45);
-	context.drawImage(imageObj, 0, 0, 40, 40);
+	context.rotate(45 * Math.PI / 180);
+	context.translate(-100,-100);
+	context.drawImage(imageObj, 100-20, 100-20, 40, 40);
+	//context.restore();
+	//context.save();
+	//context.translate(100,100);
+	//context.rotate(Math.PI/180*45);
+	//context.drawImage(imageObj, 0, 0, 40, 40);
 	//context.rotate(-Math.PI/180*45);
-	context.restore();
-	context.drawImage(imageObj, 200, 200, 40, 40);
+	//context.restore();
+	//context.drawImage(imageObj, 200, 200, 40, 40);
 
     };
     imageObj.src = '<?php echo $_GET['user'];?>.png';
